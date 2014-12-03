@@ -1,4 +1,4 @@
-"use strict";
+
 var net = require('net');
 
 var sockets = [];
@@ -83,11 +83,14 @@ var server = net.createServer(function(socket) {
                 socket.numeroAAdivinar + '.\n');
         }
 
-        if (cmd === 'adivinar') {
+	if (cmd === 'adivinar') {
             usuario = str.split(' ')[1].trim();
             numeroAdivinado = str.split(' ')[2].trim();
-
-            if (numeroAdivinado === usuarioASocket[usuario].numeroAAdivinar) {
+            
+	    if (usuarioASocket[usuario].numeroAAdivinar === usuarioASocket[usuario].numeroAAdivinar) {
+	       socket.write('Entrada invalida. No puedes elegirte a ti mismo'.)
+	    }
+            if (numeroAdivinado === usuarioASocket[usuario].numeroAAdivinar && usuarioASocket[usuario].numeroAAdivinar !== usuarioASocket[usuario].numeroAAdivinar) {	
                 usuarioASocket[usuario].end();
                 socket.write('adivinaste el número de ' + usuario + '!\n');
                 incrementarPuntos(socket.usuario, 1);
@@ -154,4 +157,4 @@ function send(usuario, mensaje, from) {
         return console.log('send a un usuario no registrado: ' + usuario);
     }
     usuarioASocket[usuario].write('\n"' + from + '" dice: ' + mensaje);
-}
+  }
